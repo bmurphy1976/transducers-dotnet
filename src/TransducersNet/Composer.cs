@@ -3,15 +3,15 @@
 namespace TransducersNet
 {
     public static class Composer {
-        public static Composer<T,T> Compose<T,T>(ITransducer<T,T> transducer) {
+        public static IComposer<T,T> Compose<T,T>(ITransducer<T,T> transducer) {
             return new Composer<T,T>(transducer);
         }
 
-        public static Composer<TOut,TIn> Compose<TOut,TIn>(ITransducer<TOut,TIn> transducer) {
+        public static IComposer<TOut,TIn> Compose<TOut,TIn>(ITransducer<TOut,TIn> transducer) {
             return new Composer<TOut,TIn>(transducer);
         }
 
-        public static Composer<TOut,TIn> Map<TOut,TIn>(Func<TIn,TOut> f) {
+        public static IComposer<TOut,TIn> Map<TOut,TIn>(Func<TIn,TOut> f) {
             return new Composer<TOut,TIn>(new MapTransducer<TIn,TOut>(f));
         }
 
@@ -20,7 +20,25 @@ namespace TransducersNet
         }
     }
 
-    public class Composer<TOut,TIn> : IComposer<TOut,TIn> {
+    public static class Composer<T> {
+        public static IComposer<T,T> Compose(ITransducer<T,T> transducer) {
+            return new Composer<T,T>(transducer);
+        }
+
+        public static IComposer<TOut,T> Compose<TOut>(ITransducer<TOut,T> transducer) {
+            return new Composer<TOut,T>(transducer);
+        }
+
+        public static IComposer<TOut,T> Map<TOut>(Func<T,TOut> f) {
+            return new Composer<TOut,T>(new MapTransducer<T,TOut>(f));
+        }
+
+        public static IComposer<T,T> Filter(Func<T,bool> f) {
+            return new Composer<T,T>(new FilterTransducer<T>(f));
+        }
+    }
+
+    internal class Composer<TOut,TIn> : IComposer<TOut,TIn> {
         private ITransducer<TOut,TIn> transducer;
 
         public Composer(ITransducer<TOut,TIn> transducer) {
@@ -48,7 +66,7 @@ namespace TransducersNet
         }
     }
 
-    public class Composer<TOut, TIntermediate, TIn> : IComposer<TOut,TIn> {
+    internal class Composer<TOut, TIntermediate, TIn> : IComposer<TOut,TIn> {
         private IComposer<TIntermediate,TIn> composer;
         private ITransducer<TOut,TIntermediate> transducer;
 

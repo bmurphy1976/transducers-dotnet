@@ -22,11 +22,11 @@ namespace TransducersNet.Tests
 
         private ITransducer<string,int> ComposeUsingMapAndFilter()
         {
-            return Composer
-                .Filter<int>(x => x % 3 == 0)
-                .Map<int>(x => x * x)
-                .Map<int>(x => x + 1)
-                .Map<string>(Convert.ToString)
+            return Composer<int>
+                .Filter(x => x % 3 == 0)
+                .Map(x => x * x)
+                .Map(x => x + 1)
+                .Map(Convert.ToString)
                 .Compose();
         }
 
@@ -48,6 +48,31 @@ namespace TransducersNet.Tests
             Assert.AreEqual("10", output[1]);
             Assert.AreEqual("37", output[2]);
             Assert.AreEqual("82", output[3]);
+        }
+
+        [Test]
+        public void TestTransducers()
+        {
+            var filter = new FilterTransducer<int>(x => x % 3 == 0);
+            var square = new MapTransducer<int,int>(x => x * x);
+            var addone = new MapTransducer<int,int>(x => x + 1);
+            var toString = new MapTransducer<int,string>(Convert.ToString);
+
+            var reducer = filter.Transduce(
+                square.Transduce(
+                    addone.Transduce(
+                        toString.Transduce(
+                            new ListReducer<string>()))));
+
+            var input = this.GetInput();
+            var output = new List<string>();
+
+            foreach (var x in input)
+            {
+                output = reducer.Apply(output, x);
+            }
+
+            this.AssertOutput(output);
         }
 
         [Test]
@@ -111,6 +136,48 @@ namespace TransducersNet.Tests
 
                 this.AssertOutput(output);
             }
+        }
+
+        [Test]
+        public void TestTransducerDocumentationA()
+        {
+            Func<List<string>, string, List<string>> appender = (result, value) => {
+                result.Add(value);
+                return result;
+            };
+
+            var filter = new FilterTransducer<int>(x => x % 3 == 0);
+            var square = new MapTransducer<int,int>(x => x * x);
+            var addOne = new MapTransducer<int,int>(x => x + 1);
+            var toString = new MapTransducer<int,string>(Convert.ToString);
+
+            var xform = Composer
+                .Compose(filter)
+                .Compose(square)
+                .Compose(addOne)
+                .Compose(toString)
+                .Compose();
+
+            var input = Enumerable.Range(0,10);
+            var output = Transducer.Transduce(xform, appender, new List<string>(), input);
+
+            this.AssertOutput(output);
+        }
+
+        [Test]
+        public void TestTransducerDocumentationB()
+        {
+            var xform = Composer<int>
+                .Filter(x => x % 3 == 0)
+                .Map(x => x * x)
+                .Map(x => x + 1)
+                .Map(Convert.ToString)
+                .Compose();
+
+            var input = Enumerable.Range(0, 10);
+            var output = Transducer.ToList(xform, input);
+
+            this.AssertOutput(output);
         }
     }
 }

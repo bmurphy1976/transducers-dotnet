@@ -39,5 +39,11 @@ namespace TransducersNet
 
             return result;
         }
+
+        public static List<TOut> ToList<TIn,TOut>(ITransducer<TOut,TIn> transducer, IEnumerable<TIn> input) 
+        {
+            var reducer = new ListReducer<TOut>();
+            return Transducer.Transduce<TIn,TOut, List<TOut>>(transducer, reducer.Apply, reducer.Init(), input);
+        }
     }
 }
