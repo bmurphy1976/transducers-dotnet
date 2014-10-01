@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransducersNet", "TransducersNet\TransducersNet.csproj", "{04A66F6F-765A-46E0-8295-0EFF329068F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransducersNet.Tests", "TransducersNet.Tests\TransducersNet.Tests.csproj", "{7AFD5B71-6E75-4417-8A47-46259B516D18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04A66F6F-765A-46E0-8295-0EFF329068F0}.Debug|x86.ActiveCfg = Debug|x86
+		{04A66F6F-765A-46E0-8295-0EFF329068F0}.Debug|x86.Build.0 = Debug|x86
+		{04A66F6F-765A-46E0-8295-0EFF329068F0}.Release|x86.ActiveCfg = Release|x86
+		{04A66F6F-765A-46E0-8295-0EFF329068F0}.Release|x86.Build.0 = Release|x86
+		{7AFD5B71-6E75-4417-8A47-46259B516D18}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7AFD5B71-6E75-4417-8A47-46259B516D18}.Debug|x86.Build.0 = Debug|Any CPU
+		{7AFD5B71-6E75-4417-8A47-46259B516D18}.Release|x86.ActiveCfg = Release|Any CPU
+		{7AFD5B71-6E75-4417-8A47-46259B516D18}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = TransducersNet.csproj
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+bin
+src/packages
+src/TransducersNet/bin
+src/TransducersNet/obj
+src/TransducersNet.Tests/bin
+src/TransducersNet.Tests/obj
