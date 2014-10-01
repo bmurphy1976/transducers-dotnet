@@ -48,6 +48,7 @@
     <Compile Include="FilterTransducer.cs" />
     <Compile Include="Composer.cs" />
     <Compile Include="ComposerTransducer.cs" />
+    <Compile Include="ObservableTransducer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
